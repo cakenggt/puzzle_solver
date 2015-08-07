@@ -1,5 +1,6 @@
 from puzzle import puzzle
 import timeit
+import sys
 
 def quadratic(arg, size):
     top_left = None
@@ -82,20 +83,24 @@ def check_puzzle(arg):
                     return False
     return True
 
-def test_quadratic():
-    puzzle10 = puzzle.generatePuzzle(100)
-    result = quadratic(puzzle10, 100)
+def test_quadratic(size):
+    puzzle10 = puzzle.generatePuzzle(size)
+    result = quadratic(puzzle10, size)
     #print('quadratic function success: ' + str(check_puzzle(result)))
 
-def test_linear():
-    puzzle10 = puzzle.generatePuzzle(100)
-    result = linear(puzzle10, 100)
+def test_linear(size):
+    puzzle10 = puzzle.generatePuzzle(size)
+    result = linear(puzzle10, size)
     #print('linear function success: ' + str(check_puzzle(result)))
 
-def main():
-    tests = 1
-    print('quadratic: ' + str(timeit.timeit('test_quadratic()', setup='from __main__ import test_quadratic', number=tests)))
-    print('linear: ' + str(timeit.timeit('test_linear()', setup='from __main__ import test_linear', number=tests)))
+def main(tests=1, size=100):
+    print('quadratic: ' + str(timeit.timeit('test_quadratic('+str(size)+')', setup='from __main__ import test_quadratic', number=tests)))
+    print('linear: ' + str(timeit.timeit('test_linear('+str(size)+')', setup='from __main__ import test_linear', number=tests)))
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv)==1:
+        main()
+    elif len(sys.argv)==2:
+        main(int(sys.argv[1]))
+    elif len(sys.argv)==3:
+        main(int(sys.argv[1]), int(sys.argv[2]))
