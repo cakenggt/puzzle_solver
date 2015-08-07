@@ -83,19 +83,19 @@ def check_puzzle(arg):
                     return False
     return True
 
-def test_quadratic(size):
-    puzzle10 = puzzle.generatePuzzle(size)
+def test_quadratic(size, puzzle10):
+    #puzzle10 = puzzle.generatePuzzle(size)
     result = quadratic(puzzle10, size)
     #print('quadratic function success: ' + str(check_puzzle(result)))
 
-def test_linear(size):
-    puzzle10 = puzzle.generatePuzzle(size)
+def test_linear(size, puzzle10):
+    #puzzle10 = puzzle.generatePuzzle(size)
     result = linear(puzzle10, size)
     #print('linear function success: ' + str(check_puzzle(result)))
 
 def main(tests=1, size=100):
-    print('quadratic: ' + str(timeit.timeit('test_quadratic('+str(size)+')', setup='from __main__ import test_quadratic', number=tests)))
-    print('linear: ' + str(timeit.timeit('test_linear('+str(size)+')', setup='from __main__ import test_linear', number=tests)))
+    print('quadratic: ' + str(timeit.timeit('test_quadratic('+str(size)+', puzzle10)', setup='from __main__ import test_quadratic; from puzzle import puzzle; puzzle10 = puzzle.generatePuzzle('+str(size)+')', number=tests)))
+    print('linear: ' + str(timeit.timeit('test_linear('+str(size)+', puzzle10)', setup='from __main__ import test_linear; from puzzle import puzzle; puzzle10 = puzzle.generatePuzzle('+str(size)+')', number=tests)))
 
 if __name__ == "__main__":
     if len(sys.argv)==1:
