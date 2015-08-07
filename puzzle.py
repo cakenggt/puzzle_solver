@@ -1,5 +1,6 @@
-import uuid;
-import random;
+import uuid
+import random
+import pickle
 
 class PuzzlePiece:
     left = None;
@@ -25,4 +26,6 @@ def generatePuzzle(size):
             formattedResult[x].append(newPiece)
             result.append(newPiece)
     random.shuffle(result)
+    output = open(str(size)+'x'+str(size)+'.pk', 'wb')
+    pickle.dump(result, output)
     return result
