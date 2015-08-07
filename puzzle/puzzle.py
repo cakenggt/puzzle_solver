@@ -11,9 +11,9 @@ class PuzzlePiece:
 def generatePuzzle(size):
     formattedResult = []
     result = []
-    for x in xrange(0, size):
+    for x in xrange(size):
         formattedResult.append([])
-        for y in xrange(0, size):
+        for y in xrange(size):
             newPiece = PuzzlePiece();
             if x > 0:
                 newPiece.left = formattedResult[x-1][y].right
