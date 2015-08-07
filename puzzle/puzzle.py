@@ -8,6 +8,9 @@ class PuzzlePiece:
     up = None;
     down = None;
 
+    def __str__(self):
+        return 'l:'+str(self.left)+' r:'+str(self.right)+' u:'+str(self.up)+' d:'+str(self.down)
+
 def generatePuzzle(size):
     formattedResult = []
     result = []

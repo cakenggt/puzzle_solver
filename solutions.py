@@ -33,7 +33,38 @@ def quadratic(arg, size):
                         break
     return result
 
-def checkPuzzle(arg):
+def linear(arg, size):
+    resultDict = {}
+    result = []
+    top_left = None
+    for piece in arg:
+        if piece.left is None and piece.up is None:
+            top_left = piece
+        if piece.up is not None:
+            resultDict['u'+str(piece.up)] = piece
+        if piece.down is not None:
+            resultDict['d'+str(piece.down)] = piece
+        if piece.left is not None:
+            resultDict['l'+str(piece.left)] = piece
+        if piece.right is not None:
+            resultDict['r'+str(piece.right)] = piece
+    for y in xrange(size):
+        result.append([])
+        for x in xrange(size):
+            if y == 0:
+                if x == 0:
+                    result[y].append(top_left)
+                    continue
+                else:
+                    focus = result[y][x-1].right
+                    found = resultDict['l'+str(focus)]
+                    result[y].append(found)
+            else:
+                focus = result[y-1][x].down
+                result[y].append(resultDict['u'+str(focus)])
+    return result
+
+def check_puzzle(arg):
     for y in xrange(len(arg)):
         for x in xrange(len(arg)):
             piece = arg[y][x]
@@ -51,10 +82,20 @@ def checkPuzzle(arg):
                     return False
     return True
 
+def test_quadratic():
+    puzzle10 = puzzle.generatePuzzle(100)
+    result = quadratic(puzzle10, 100)
+    #print('quadratic function success: ' + str(check_puzzle(result)))
+
+def test_linear():
+    puzzle10 = puzzle.generatePuzzle(100)
+    result = linear(puzzle10, 100)
+    #print('linear function success: ' + str(check_puzzle(result)))
+
 def main():
-    puzzle10 = puzzle.generatePuzzle(10)
-    result = quadratic(puzzle10, 10)
-    print('quadratic function success: ' + str(checkPuzzle(result)))
+    tests = 1
+    print('quadratic: ' + str(timeit.timeit('test_quadratic()', setup='from __main__ import test_quadratic', number=tests)))
+    print('linear: ' + str(timeit.timeit('test_linear()', setup='from __main__ import test_linear', number=tests)))
 
 if __name__ == "__main__":
     main()
